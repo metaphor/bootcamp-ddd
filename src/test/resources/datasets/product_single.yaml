@@ -1,0 +1,6 @@
+products:
+  - id: p001
+    name: 'Macbook Air'
+    status: 'PUBLISHED'
+    price: 98.98
+    published_at: '2025-08-08 00:00:00'

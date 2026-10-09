@@ -1,0 +1,157 @@
+classDiagram
+    %% 领域模型图 - DDD Bootcamp
+
+    %% 聚合根
+    class Customer {
+        +String id
+        +String securedId
+        +CustomerDescription description
+        +LocalDateTime registeredAt
+    }
+
+    class Product {
+        +String id
+        +String name
+        +ProductStatus status
+        +BigDecimal price
+        +LocalDateTime publishedAt
+    }
+
+    class Inventory {
+        +String id
+        +String productId
+        +int stock
+        +stockOut(int quantity) void
+    }
+
+    class Order {
+        +String id
+        +OrderStatus status
+        +LocalDateTime placedAt
+        +BigDecimal totalAmount
+        +OrderDescription description
+        +List~OrderLine~ lines
+        +place(String id, OrderDescription, List~OrderLine~) Order
+    }
+
+    %% 值对象
+    class CustomerDescription {
+        +String name
+        +from(String name) CustomerDescription
+    }
+
+    class OrderDescription {
+        +String customerId
+        +String remark
+    }
+
+    class OrderLine {
+        +OrderLineDescription description
+        +BigDecimal totalAmount
+        +from(OrderLineDescription) OrderLine
+    }
+
+    class OrderLineDescription {
+        +ProductSnapshot product
+        +int quantity
+    }
+
+    class ProductSnapshot {
+        +String productId
+        +String productName
+        +BigDecimal price
+    }
+
+    %% 枚举
+    class ProductStatus {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+    }
+
+    class OrderStatus {
+        <<enumeration>>
+        PLACED
+    }
+
+    %% 领域服务
+    class OrderDomainService {
+        +placeOrder(Order, Customer, List~Product~) Order
+    }
+
+    class RiskChecker {
+        +checkRisk(Order) boolean
+    }
+
+    class Stocker {
+        +stockOut(Inventory, int) void
+    }
+
+    %% 领域事件
+    class OrderPlacedEvent {
+        +String orderId
+        +String customerId
+        +BigDecimal totalAmount
+    }
+
+    class InventoryStockOutEvent {
+        +String inventoryId
+        +String productId
+        +int quantity
+    }
+
+    %% 工厂
+    class CustomerFactory {
+        +createCustomer(String name) Customer
+    }
+
+    class OrderFactory {
+        +createOrder(String customerId, List~OrderLine~) Order
+    }
+
+    %% 仓储接口
+    class CustomerRepository {
+        <<interface>>
+        +save(Customer) void
+        +findById(String) Customer
+    }
+
+    class ProductRepository {
+        <<interface>>
+        +save(Product) void
+        +findById(String) Product
+    }
+
+    class InventoryRepository {
+        <<interface>>
+        +save(Inventory) void
+        +findByProductId(String) Inventory
+    }
+
+    class OrderRepository {
+        <<interface>>
+        +save(Order) void
+        +findById(String) Order
+    }
+
+    %% 关系定义
+    Customer "1" -- "*" Order : 创建
+    Order "1" -- "*" OrderLine : 包含
+    OrderLine "1" -- "1" ProductSnapshot : 引用
+    Inventory "1" -- "1" Product : 对应
+    OrderDescription "1" -- "1" Customer : 关联
+
+    %% 领域服务关系
+    OrderDomainService ..> Order : 操作
+    OrderDomainService ..> Customer : 验证
+    OrderDomainService ..> Product : 验证
+
+    %% 仓储关系
+    CustomerRepository ..> Customer : 管理
+    ProductRepository ..> Product : 管理
+    InventoryRepository ..> Inventory : 管理
+    OrderRepository ..> Order : 管理
+
+    %% 事件关系
+    OrderPlacedEvent ..> Order : 触发
+    InventoryStockOutEvent ..> Inventory : 触发

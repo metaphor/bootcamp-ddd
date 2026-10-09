@@ -1,0 +1,5 @@
+customers:
+  - id: cust001
+    secured_id: secured_id_12
+    name: 小李
+    registered_at: '2025-08-08 00:00:00'

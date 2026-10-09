@@ -1,0 +1,4 @@
+inventories:
+  - id: inv001
+    product_id: p001
+    stock: 3

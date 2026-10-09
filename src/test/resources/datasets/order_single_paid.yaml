@@ -1,0 +1,8 @@
+orders:
+  - id: order001
+    status: "PAID"
+
+payments:
+  - order_id: order001
+    status: "PAID"
+    amount: 199.98

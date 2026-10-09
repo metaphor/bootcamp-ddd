@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: bootcamp-ddd
+  main:
+    banner-mode: off
+  jpa:
+    open-in-view: false

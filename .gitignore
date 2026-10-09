@@ -1,0 +1,43 @@
+# Gradle构建目录
+.gradle/
+build/
+
+# IDE配置文件
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+logs/
+*.log
+
+# 临时文件
+tmp/
+out/
+
+# 缓存文件
+.cache/
+
+# 环境变量配置文件
+.env
+.env.local
+
+# Java字节码文件
+*.class
+
+# Maven相关（如果混合使用）
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# Gradle构建目录

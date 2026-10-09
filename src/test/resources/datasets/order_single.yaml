@@ -1,0 +1,17 @@
+orders:
+  - id: order001
+    customer_id: cust001
+    status: "PLACED"
+    placed_at: "2024-01-01 11:00:00"
+    remark: "示例订单"
+    total_amount: 199.98
+
+order_lines:
+  - order_id: order001
+    product_id: prod001
+    product_name: "Macbook Air"
+    product_price: 99.99
+    quantity: 2
+    total_amount: 199.98
+
+payments:

@@ -1,0 +1,5 @@
+cacheConnection: true
+cacheTableNames: true
+disableSequenceFiltering: false
+properties:
+  allowEmptyFields: true
